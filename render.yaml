@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: slack-weekly-survey-bot
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: SLACK_BOT_TOKEN
+        sync: false
+      - key: SLACK_SIGNING_SECRET
+        sync: false
+      - key: SURVEY_CHANNEL
+        sync: false
+      - key: ADMIN_USER_ID
+        sync: false
+      - key: TZ
+        sync: false
+      - key: TEST_TRIGGER_TOKEN
+        sync: false
