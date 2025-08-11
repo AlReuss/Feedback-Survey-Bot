@@ -1,0 +1,4 @@
+flask
+slack-sdk
+apscheduler
+pytz
