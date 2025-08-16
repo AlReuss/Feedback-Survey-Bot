@@ -1,0 +1,28 @@
+name: Weekly Survey Trigger
+
+on:
+  schedule:
+    # Runs a few times on Sunday (UTC times). Inside, we check if it's exactly 12:00 PM Eastern.
+    - cron: "0 15 * * 0"
+    - cron: "0 16 * * 0"
+    - cron: "0 17 * * 0"
+    - cron: "0 18 * * 0"
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    env:
+      RENDER_URL: "https://feedback-survey-bot.onrender.com"
+      TEST_TRIGGER_TOKEN: ${{ secrets.TEST_TRIGGER_TOKEN }}
+    steps:
+      - name: Only fire at exactly 12:00 PM Eastern
+        run: |
+          TZ=America/New_York
+          HOUR=$(date +"%H" --date="TZ=\"$TZ\" now")
+          MIN=$(date +"%M" --date="TZ=\"$TZ\" now")
+          if [ "$HOUR" != "12" ] || [ "$MIN" != "00" ]; then
+            echo "Not 12:00 PM Eastern right now; skipping."
+            exit 0
+          fi
+          echo "It's 12:00 PM Eastern — triggering survey."
+          curl -fsS "$RENDER_URL/trigger?token=$TEST_TRIGGER_TOKEN"
