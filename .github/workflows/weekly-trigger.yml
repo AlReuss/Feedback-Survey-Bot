@@ -1,12 +1,7 @@
 name: Weekly Survey Trigger
 
 on:
-  schedule:
-    # Runs a few times on Sunday (UTC); inside we fire ONLY at 12:00 PM Eastern.
-    - cron: "0 15 * * 0"
-    - cron: "0 16 * * 0"
-    - cron: "0 17 * * 0"
-    - cron: "0 18 * * 0"
+  # Remove/disable the schedule to pause automation.
   workflow_dispatch:
 
 jobs:
